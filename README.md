@@ -1,34 +1,58 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Next.js로 깃허브 레퍼지토리 만들어보기
 
-## Getting Started
+## 완성된 모습
 
-First, run the development server:
+![깃허브 레퍼지토리](https://user-images.githubusercontent.com/29043491/107621097-1438e080-6c99-11eb-8e8a-51b4e2f476bb.png)
 
-```bash
-npm run dev
-# or
-yarn dev
+## 사용 기술
+
+> Next.js  
+> css: styled-jsx(기본제공)  
+> 아이콘: react-icons  
+> 폰트 : 구글 폰트
+> api: 깃허브
+
+## 정리
+
+### create-next-app 사용하기
+
+```
+npx create-next-app
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+해당 명령어를 터미널에 입력하면 통해서 기본 환경이 갖춰진 넥스트 앱이 만들어진다.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+```js
+// pages/users/[name].jsx
+//해당 폴더는 파일기반으로 자동으로 라우팅 설정이 됨
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+//동적 라우팅을 하는 방법
+import Link from "next/link";
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+<Link href=`/users/${name}`>
+    <a>Move to {name}</a>
+</Link>
+```
 
-## Learn More
+위와 같이 라우팅을 할 때는 Link안에 a태그도 써줘야하고 동적 라우팅을 통해 [name].jsx라고 만든 페이지 등에 보낼 수 있음.
 
-To learn more about Next.js, take a look at the following resources:
+#### 정적파일
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+/public 폴더에 정적파일을 제공하고 src="/name.png" 등으로 사용하면 됨.  
+이미지 파일, 폰트, manifest.json, robots.txt, favicon.ico, 로고 등을 여기에 넣고 사용하면 됨
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+#### 서버로부터 데이터 불러오는 api
 
-## Deploy on Vercel
+1. getServerSideProps
+   > 서버에서 데이터를 패치하여 초기 데이터를 전달함
+2. getStaticProps
+   > 빌드 시에 데이터를 불러와 결과를 json으로 저장하면 사용함
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### 대표 특징
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+1. 자동 코드 분할
+   > 자동으로 코드 분할을 하기 때문에 불필요한 코드가 로드되지 않게 됨
+2. 파일 기반 라우팅 설정
+   > pages 폴더에 생성되는 경로에 따라서 자동으로 라우팅 설정이됨
+3. styled-jsx지원
+   > 다른 모듈을 활용해도 되지만 기본적으로 컴포넌트 기반의 css 모듈을 제공한다.
